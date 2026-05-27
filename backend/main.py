@@ -37,6 +37,20 @@ os.makedirs("generated_apis", exist_ok=True)
 
 # Store translation history in memory for now
 translation_history = []
+import json
+
+def save_history():
+    with open("translation_history.json", "w") as f:
+        json.dump(translation_history, f)
+
+def load_history():
+    global translation_history
+    if os.path.exists("translation_history.json"):
+        with open("translation_history.json", "r") as f:
+            translation_history = json.load(f)
+
+# Load history when server starts
+load_history()
 
 # Initialize pipeline
 pipeline = LegacyBridgePipeline()
@@ -87,6 +101,7 @@ async def translate_cobol(file: UploadFile = File(...)):
         "understanding": result["understanding"],
         "generated_code": result["generated_code"]
     })
+    save_history()
 
     return {
         "success": True,
