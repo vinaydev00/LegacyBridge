@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 
-const API_URL = "http://localhost:8000"
+const API_URL = "https://legacybridge.onrender.com"
 
 export default function Dashboard({ user, token, setActivePage }) {
   const [stats, setStats] = useState(null)
